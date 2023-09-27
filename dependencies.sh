@@ -13,8 +13,8 @@ sudo yum -y install epel-release &&
 # sudo rm -rf altinstall &&
 # sudo yum -y install python3-pip &&
 sudo yum -y install vim dnf&&
-sudo pip3 install alembic ansible &&
-sudo pip3 install --upgrade pip &&
+sudo python -m pip install --user alembic ansible &&
+sudo python -m pip install --upgrade pip &&
 sudo mkdir /etc/ansible &&
 sudo chown astmin:astmin /etc/ansible &&
 sudo echo "[starfish]" >> /etc/ansible/hosts &&
