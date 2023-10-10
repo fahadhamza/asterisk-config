@@ -139,7 +139,7 @@
       dnf:
         name:
           - unixODBC
-          - unixODBC-devel
+          - unixodbc-dev
           - mysql-connector-odbc
           - python3-mysqlclient
           - tcpdump
