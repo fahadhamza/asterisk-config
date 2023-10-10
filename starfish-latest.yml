@@ -22,7 +22,7 @@
 
     - name: Install dependencies
       dnf:
-        name: ["vim", "wget", "mysql-connector-python"]
+        name: ["vim", "wget", "python3-mysqlclient"]
         state: present
 
     - name: Install the MySQL repo.
@@ -137,7 +137,7 @@
           - unixODBC
           - unixODBC-devel
           - mysql-connector-odbc
-          - mysql-connector-python
+          - python3-mysqlclient
           - tcpdump
           - ntp
           - ntpdate
