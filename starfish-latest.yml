@@ -144,7 +144,6 @@
           - python3-mysqlclient
           - tcpdump
           - chrony.x86_64
-          - ntpdate
           - jansson
           - bind-utils
         state: present
