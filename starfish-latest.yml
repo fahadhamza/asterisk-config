@@ -31,7 +31,7 @@
 
     - name: Install the MySQL repo.
       dnf:
-        name: http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+        name: https://dev.mysql.com/downloads/repo/apt/
         state: present
 
     - name: Install mysql-server
