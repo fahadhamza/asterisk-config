@@ -146,6 +146,7 @@
           - chrony.x86_64
           - jansson
           - bind-utils
+          - openssl-libs
         state: present
 
     # Tweak the firewall for UDP/SIP
@@ -160,9 +161,9 @@
         permanent: true
         state: enabled
 
-    - name: Ensure NTP is running
+    - name: Ensure chronyd service is running
       service:
-        name: ntpd
+        name: chronyd
         state: started
         enabled: yes
     # The libmyodbc8a.so file is versioned, so if you don't have version 8, see what the
