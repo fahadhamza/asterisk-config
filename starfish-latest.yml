@@ -203,4 +203,4 @@
   handlers:
     - name: Update package cache
       command: yum makecache
-      notify: mysql80-community-release-el8-7.noarch.rpm_installed
+      notify: mysql80-community-release_installed
