@@ -31,20 +31,22 @@
 
     - name: Install the MySQL repo.
       dnf:
-        name: http://repo.mysql.com/mysql80-community-release-el9-4.noarch.rpm
+        name:
+          https://repo.mysql.com//mysql80-community-release-el9-4.noarch.rpm
+          # http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+          # name: http://repo.mysql.com/mysql80-community-release-el9-4.noarch.rpm
         state: present
 
-    - name: Install mysql-server
+    - name: Install mysql-community-server
       dnf:
         name: mysql-community-server
-        # name: mysql-server
         state: present
 
     - name: Override variables for MySQL (RedHat).
       set_fact:
         mysql_daemon: mysqld
         mysql_log_error: /var/log/mysqld.err
-        mysql_packages: ["mysql-server"]
+        mysql_packages: ["mysql-community-server"]
         mysql_pid_file: /var/run/mysqld/mysqld.pid
         mysql_socket: /var/lib/mysql/mysql.sock
         mysql_syslog_tag: mysqld
