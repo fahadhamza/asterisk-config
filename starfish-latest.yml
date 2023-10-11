@@ -36,7 +36,8 @@
 
     - name: Install mysql-server
       dnf:
-        name: mysql-server
+        name: mysql-community-server
+        # name: mysql-server
         state: present
 
     - name: Override variables for MySQL (RedHat).
