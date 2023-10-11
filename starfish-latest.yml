@@ -22,7 +22,8 @@
     - name: Import key for mysql-repo
       rpm_key:
         state: present
-        key: http://repo.mysql.com/RPM-GPG-KEY-mysql
+        # key: http://repo.mysql.com/RPM-GPG-KEY-mysql
+        key: https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
 
     - name: Install dependencies
       dnf:
@@ -200,7 +201,3 @@
           Password = {{ updated_mysql_asterisk_password }}
           #Socket = /var/run/mysqld/mysqld.sock
           Socket = /var/lib/mysql/mysql.sock
-  handlers:
-    - name: Update package cache
-      command: yum makecache
-      notify: https://dev.mysql.com/downloads/repo/yum/mysql80-community-release-el8-7.noarch.rpm_installed
