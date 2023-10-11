@@ -140,7 +140,7 @@
         name:
           - unixODBC
           - unixODBC.x86_64
-          - mysql-connector-odbc-8.1
+          - mysql-connector-odbc
           - python3-mysqlclient
           - tcpdump
           - chrony.x86_64
