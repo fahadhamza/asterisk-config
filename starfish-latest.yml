@@ -32,7 +32,8 @@
     - name: Install the MySQL repo.
       dnf:
         name:
-          https://repo.mysql.com//mysql80-community-release-el9-1.noarch.rpm
+          https://dev.mysql.com/downloads/repo/yum/mysql80-community-release-el8-7.noarch.rpm
+          # https://repo.mysql.com//mysql80-community-release-el9-1.noarch.rpm
           # http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
           # name: http://repo.mysql.com/mysql80-community-release-el9-4.noarch.rpm
         state: present
@@ -199,3 +200,7 @@
           Password = {{ updated_mysql_asterisk_password }}
           #Socket = /var/run/mysqld/mysqld.sock
           Socket = /var/lib/mysql/mysql.sock
+  handlers:
+    - name: Update package cache
+      command: yum makecache
+      notify: mysql80-community-release-el8-7.noarch.rpm_installed
