@@ -11,9 +11,10 @@
 
     # Uncomment these for subsequent runs
     current_mysql_root_password: "YouNeedAReallyGoodPassword"
-    updated_mysql_root_password: { { current_mysql_root_password } }
+    updated_mysql_root_password: "{{ current_mysql_root_password }}"
     current_mysql_asterisk_password: "YouNeedAReallyGoodPasswordHereToo"
-    updated_mysql_asterisk_password: { { current_mysql_asterisk_password } }
+    updated_mysql_asterisk_password: "{{ current_mysql_asterisk_password }}"
+
   tasks:
     - name: Install epel-release
       dnf:
