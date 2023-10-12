@@ -142,6 +142,7 @@
           - unixODBC.x86_64
           - libiodbc-devel.x86_64
           - python3-mysqlclient
+          - mariadb-connector-odbc.x86_64
           - tcpdump
           - chrony.x86_64
           - jansson
