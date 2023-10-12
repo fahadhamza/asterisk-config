@@ -139,7 +139,7 @@
     - name: Install other dependencies
       dnf:
         name:
-          - unixODBC
+          # - unixODBC
           - unixODBC.x86_64
           - libiodbc-devel.x86_64
           - python3-mysqlclient
