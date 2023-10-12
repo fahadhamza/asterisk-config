@@ -19,27 +19,20 @@
       dnf:
         name: epel-release
         state: present
-    - name: Import key for mysql-repo
-      rpm_key:
-        state: present
-        # key: http://repo.mysql.com/RPM-GPG-KEY-mysql
-        key: https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
 
     - name: Install dependencies
       dnf:
         name: ["vim", "wget", "python3-mysqlclient"]
         state: present
 
-    - name: Install the MySQL repo.
-      dnf:
-        name:
-          https://repo.mysql.com//mysql80-community-release-el9-4.noarch.rpm
-          # https://dev.mysql.com/downloads/repo/yum/mysql80-community-release-el9-4.noarch.rpm
-          # https://dev.mysql.com/downloads/repo/yum/mysql80-community-release-el8-7.noarch.rpm
-          # https://repo.mysql.com//mysql80-community-release-el9-1.noarch.rpm
-          # http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
-          # name: http://repo.mysql.com/mysql80-community-release-el9-4.noarch.rpm
-        state: present
+    - name: Add MySQL 8.0 YUM repository
+      yum_repository:
+        name: mysql-8.0
+        description: MySQL 8.0 YUM Repository
+        baseurl: https://repo.mysql.com/yum/mysql-8.0-community/el/9/$basearch/
+        gpgkey: https://repo.mysql.com/RPM-GPG-KEY-mysql
+        gpgcheck: yes
+        enabled: yes
 
     - name: Install mysql-community-server
       dnf:
