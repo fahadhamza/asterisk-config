@@ -33,7 +33,7 @@
     - name: Install the MySQL repo.
       dnf:
         name:
-          https://repo.mysql.com/yum/mysql80-community/el/9/
+          https://dev.mysql.com/downloads/repo/yum/mysql80-community-release-el9-4.noarch.rpm
           # https://dev.mysql.com/downloads/repo/yum/mysql80-community-release-el8-7.noarch.rpm
           # https://repo.mysql.com//mysql80-community-release-el9-1.noarch.rpm
           # http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
