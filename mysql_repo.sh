@@ -1,4 +1,5 @@
-sudo wget https://repo.mysql.com/yum/mysql80-community-release-el9-7.noarch.rpm
-sudo rpm -ivh mysql80-community-release-el9-7.noarch.rpm
-sudo dnf makecache
-sudo dnf install mysql-community-server
+# sudo wget https://repo.mysql.com/yum/mysql80-community/el/9/
+sudo wget https://dev.mysql.com/get/mysql8/repo/el9/mysql80-community-el9.repo
+sudo mv mysql80-community-el9.repo /etc/yum.repos.d/
+sudo dnf update
+# sudo dnf install mysql-community-server

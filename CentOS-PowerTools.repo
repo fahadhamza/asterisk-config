@@ -1,5 +1,5 @@
 [mysql80-community]
 name=MySQL Community Edition Repository
-baseurl=https://repo.mysql.com/yum/mysql80-community/el/9/
+baseurl=https://dev.mysql.com/get/mysql8/repo/el9/mysql80-community-el9.repo
 gpgkey=https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
 enabled=1
