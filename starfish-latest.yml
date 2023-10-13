@@ -179,9 +179,9 @@
       with_items:
         - regexp: "^Driver64"
           # line: "Driver64 = /usr/lib64/libmyodbc8a.so"
-          line: "Driver64 = /usr/lib64/libmariadb.so.3"
+          line: "Driver64 = /usr/lib64/libmaodbc.so"
         - regexp: "^Setup64"
-          line: "Setup64 = /usr/lib64/libodbcmyS.so"
+          line: "Setup64 = /usr/lib64/libmaodbc.so"
 
     - name: create odbc.ini
       blockinfile:

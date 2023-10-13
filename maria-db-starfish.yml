@@ -1,0 +1,157 @@
+---
+- hosts: starfish
+  become: yes
+  vars:
+    current_mariadb_root_password: ""
+    updated_mariadb_root_password: "YouNeedAReallyGoodPassword"
+    current_mariadb_asterisk_password: ""
+    updated_mariadb_asterisk_password: "YouNeedAReallyGoodPasswordHereToo"
+
+  tasks:
+    - name: Install epel-release
+      dnf:
+        name: epel-release
+        state: present
+
+    - name: Install dependencies
+      dnf:
+        name: ["vim", "wget", "MariaDB-client"]
+        state: present
+
+    - name: Install the MariaDB repo.
+      dnf:
+        name: https://downloads.mariadb.com/MariaDB/mariadb_repo_setup
+        state: present
+
+    - name: Install MariaDB-server
+      dnf:
+        name: MariaDB-server
+        state: present
+
+    - name: Ensure MariaDB server is running
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Update MariaDB root password for localhost root account
+      mysql_user:
+        login_user: root
+        login_password: "{{ current_mariadb_root_password }}"
+        name: root
+        host: localhost
+        password: "{{ updated_mariadb_root_password }}"
+
+    - name: Create asterisk database
+      mysql_db:
+        login_user: root
+        login_password: "{{ updated_mariadb_root_password }}"
+        name: asterisk
+        state: present
+
+    - name: MariaDB asterisk user
+      mysql_user:
+        login_user: root
+        login_password: "{{ updated_mariadb_root_password }}"
+        name: asterisk
+        host: "{{ item }}"
+        password: "{{ updated_mariadb_asterisk_password }}"
+        priv: "asterisk.*:ALL"
+      with_items:
+        - "{{ inventory_hostname }}"
+        - 127.0.0.1
+        - ::1
+        - localhost
+        - localhost.localdomain
+
+    - name: Remove anonymous user
+      mysql_user:
+        login_user: root
+        login_password: "{{ updated_mariadb_root_password }}"
+        name: ""
+        state: absent
+        host: "{{ item }}"
+      with_items:
+        - localhost
+        - "{{ inventory_hostname }}"
+        - 127.0.0.1
+        - ::1
+        - localhost.localdomain
+
+    - name: Remove test database
+      mysql_db:
+        login_user: root
+        login_password: "{{ updated_mariadb_root_password }}"
+        name: test
+        state: absent
+
+    - name: Create users and groups
+      user:
+        name: asterisk
+        state: present
+        createhome: yes
+      group:
+        name: asterisk
+        state: present
+
+    - user:
+        name: astmin
+        groups: asterisk,wheel
+        state: present
+
+    - name: Install other dependencies
+      dnf:
+        name:
+          - unixODBC
+          - unixODBC-devel
+          - mariadb-connector-odbc
+          - MariaDB-python
+          - tcpdump
+          - ntp
+          - ntpdate
+          - jansson
+          - bind-utils
+        state: present
+
+    - firewalld:
+        port: 5060/udp
+        permanent: true
+        state: enabled
+
+    - firewalld:
+        port: 10000-20000/udp
+        permanent: true
+        state: enabled
+
+    - name: Ensure NTP is running
+      service:
+        name: ntpd
+        state: started
+        enabled: yes
+
+    - name: Update odbcinst.ini
+      lineinfile:
+        dest: /etc/odbcinst.ini
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+      with_items:
+        - regexp: "^Driver64"
+          line: "Driver64 = /usr/lib64/libmaodbc.so"
+        - regexp: "^Setup64"
+          line: "Setup64 = /usr/lib64/libmaodbc.so"
+
+    - name: Create odbc.ini
+      blockinfile:
+        path: /etc/odbc.ini
+        create: yes
+        block: |
+          [asterisk]
+          Driver = MariaDB
+          Description = MariaDB connection to 'asterisk' database
+          Server = localhost
+          Port = 3306
+          Database = asterisk
+          UserName = asterisk
+          Password = {{ updated_mariadb_asterisk_password }}
+          Socket = /var/lib/mysql/mysql.sock

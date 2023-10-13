@@ -137,6 +137,7 @@
           - unixODBC
           - unixODBC-devel
           - mysql-connector-odbc
+          - mariadb-connector-odbc
           - MySQL-python
           - tcpdump
           - ntp
