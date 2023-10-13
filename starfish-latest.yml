@@ -3,17 +3,17 @@
   become: yes
   vars:
     # Use these on the first run of this playbook
-    # current_mysql_root_password: "YouNeedAReallyGoodPassword"
-    # updated_mysql_root_password: "YouNeedAReallyGoodPassword"
-    # current_mysql_asterisk_password: ""
-    # updated_mysql_asterisk_password: "YouNeedAReallyGoodPasswordHereToo"
+    current_mysql_root_password: ""
+    updated_mysql_root_password: "YouNeedAReallyGoodPassword"
+    current_mysql_asterisk_password: ""
+    updated_mysql_asterisk_password: "YouNeedAReallyGoodPasswordHereToo"
     # Comment the above out after the first run
 
     # Uncomment these for subsequent runs
-    current_mysql_root_password: "YouNeedAReallyGoodPassword"
-    updated_mysql_root_password: "{{ current_mysql_root_password }}"
-    current_mysql_asterisk_password: "YouNeedAReallyGoodPasswordHereToo"
-    updated_mysql_asterisk_password: "{{ current_mysql_asterisk_password }}"
+    # current_mysql_root_password: "YouNeedAReallyGoodPassword"
+    # updated_mysql_root_password: "{{ current_mysql_root_password }}"
+    # current_mysql_asterisk_password: "YouNeedAReallyGoodPasswordHereToo"
+    # updated_mysql_asterisk_password: "{{ current_mysql_asterisk_password }}"
 
   tasks:
     - name: Install epel-release
@@ -30,7 +30,7 @@
       yum_repository:
         name: mysql-8.0
         description: MySQL 8.0 YUM Repository
-        baseurl: https://repo.mysql.com/yum/mysql-8.0-community/el/9/$basearch/
+        baseurl: https://repo.mysql.com//mysql80-community-release-el9.rpm
         gpgkey: https://repo.mysql.com/RPM-GPG-KEY-mysql
         gpgcheck: yes
         enabled: yes
@@ -139,15 +139,15 @@
     - name: Install other dependencies
       dnf:
         name:
-          - unixODBC.x86_64
-          - libiodbc-devel.x86_64
-          - python3-mysqlclient
-          - mariadb-connector-odbc.x86_64
+          - unixODBC
+          - unixODBC-devel
+          - mysql-connector-odbc
+          - MySQL-python
           - tcpdump
-          - chrony.x86_64
+          - ntp
+          - ntpdate
           - jansson
           - bind-utils
-          - openssl-libs
         state: present
 
     # Tweak the firewall for UDP/SIP
