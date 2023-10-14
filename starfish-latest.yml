@@ -30,7 +30,7 @@
       yum_repository:
         name: mysql-8.0
         description: MySQL 8.0 YUM Repository
-        baseurl: https://repo.mysql.com//mysql80-community-release-el9.rpm
+        baseurl: https://repo.mysql.com//mysql80-community-release-el9-4.noarch.rpm
         gpgkey: https://repo.mysql.com/RPM-GPG-KEY-mysql
         gpgcheck: yes
         enabled: yes
